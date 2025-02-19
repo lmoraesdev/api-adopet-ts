@@ -14,7 +14,7 @@ export default class AdotanteEntity {
   @PrimaryGeneratedColumn()
   id!: number;
   @Column()
-  name: string;
+  nome: string;
   @Column()
   senha: string;
   @Column()
@@ -38,7 +38,7 @@ export default class AdotanteEntity {
     foto?: string,
     endereco?: EnderecoEntity
   ) {
-    this.name = nome;
+    this.nome = nome;
     this.senha = senha;
     this.celular = celular;
     this.foto = foto;
