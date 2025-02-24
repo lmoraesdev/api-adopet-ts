@@ -1,14 +1,15 @@
+import 'express-async-errors';
 import express, { Response } from 'express';
 import router from './routes';
 import 'reflect-metadata';
 import { AppDataSource } from './config/dataSource';
-import { erroMeddleware } from './middleware/error/erro';
+import { erroMiddleware } from './middleware/error/erro';
 
 const app = express();
 app.use(express.json());
 router(app);
 
-app.use(erroMeddleware);
+app.use(erroMiddleware);
 
 AppDataSource.initialize()
   .then(() => {
