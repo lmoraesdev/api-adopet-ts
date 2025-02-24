@@ -49,14 +49,11 @@ export default class AdotanteController {
     res: Response<TipoResponseBodyAdotante>
   ) {
     const { id } = req.params;
-    const { success, message } = await this.repository.atualizaAdotante(
+    await this.repository.atualizaAdotante(
       Number(id),
       req.body as AdotanteEntity
     );
 
-    if (!success) {
-      return res.status(404).json({ error: message });
-    }
     return res.sendStatus(204);
   }
 
@@ -66,13 +63,8 @@ export default class AdotanteController {
   ) {
     const { id } = req.params;
 
-    const { success, message } = await this.repository.deletaAdotante(
-      Number(id)
-    );
+    await this.repository.deletaAdotante(Number(id));
 
-    if (!success) {
-      return res.status(404).json({ error: message });
-    }
     return res.sendStatus(204);
   }
 
@@ -81,14 +73,11 @@ export default class AdotanteController {
     res: Response<TipoResponseBodyAdotante>
   ) {
     const { id } = req.params;
-    const { success, message } = await this.repository.atualizaEnderecoAdotante(
+    await this.repository.atualizaEnderecoAdotante(
       Number(id),
       req.body.endereco as EnderecoEntity
     );
 
-    if (!success) {
-      return res.status(404).json({ error: message });
-    }
     return res.sendStatus(204);
   }
 }

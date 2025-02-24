@@ -2,16 +2,23 @@ import { Repository } from 'typeorm';
 import AdotanteEntity from '../entities/AdotanteEntity';
 import InterfaceAdotanteRepository from './interfaces/interfaceAdotanteRepository';
 import EnderecoEntity from '../entities/EnderecoEntity';
-import { NaoEncontrado } from '../util/manipulaErros';
+import { NaoEncontrado, RequisicaoRuim } from '../util/manipulaErros';
 
 export default class AdotanteRepository implements InterfaceAdotanteRepository {
   private repository: Repository<AdotanteEntity>;
+
+  private async verficaCelularAdontante(celular: string) {
+    return await this.repository.findOne({ where: { celular } });
+  }
 
   constructor(repository: Repository<AdotanteEntity>) {
     this.repository = repository;
   }
 
   async criaAdotante(adotante: AdotanteEntity): Promise<void> {
+    if (await this.verficaCelularAdontante(adotante.celular)) {
+      throw new RequisicaoRuim('Celular já cadastrado');
+    }
     await this.repository.save(adotante);
   }
 
