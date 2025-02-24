@@ -1,21 +1,34 @@
-import express from 'express';
-import AdotanteRepository from '../repositories/AdotanteRepository';
+import express, { RequestHandler } from 'express';
 import { AppDataSource } from '../config/dataSource';
 import AdotanteController from '../controller/AdotanteController';
-
+import AdotanteRepository from '../repositories/AdotanteRepository';
+import { middlewareValidadorBodyAdotante } from '../middleware/validation/adotanteRequestBody';
+import { middlewareValidadorBodyEndereco } from '../middleware/validation/enderecoRequestBody';
 const router = express.Router();
 const adotanteRepository = new AdotanteRepository(
   AppDataSource.getRepository('AdotanteEntity')
 );
 const adotanteController = new AdotanteController(adotanteRepository);
 
-router.post('/', (req, res) => adotanteController.criaAdotante(req, res));
+const validateBodyAdotante: RequestHandler = (req, res, next) =>
+  middlewareValidadorBodyAdotante(req, res, next);
+
+const validateBodyEndereco: RequestHandler = (req, res, next) =>
+  middlewareValidadorBodyEndereco(req, res, next);
+
+router.post('/', validateBodyAdotante, (req, res) =>
+  adotanteController.criaAdotante(req, res)
+);
+
 router.get('/', (req, res) => adotanteController.listaAdotante(req, res));
+
 router.put('/:id', (req, res) => adotanteController.atualizaAdotante(req, res));
+
 router.delete('/:id', (req, res) =>
   adotanteController.deletaAdotante(req, res)
 );
-router.patch('/:id', (req, res) =>
+
+router.patch('/:id', validateBodyEndereco, (req, res) =>
   adotanteController.atualizaEnderecoAdotante(req, res)
 );
 
