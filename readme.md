@@ -47,13 +47,20 @@ npm run dev
 ```pgslq
 📂 api-adopet-ts
  ┣ 📂 src
- ┃ ┣ 📂 controllers
+ ┃ ┣ 📂 controller
  ┃ ┣ 📂 entities
- ┃ ┣ 📂 middlewares
+ ┃ ┣ 📂 middleware
+ ┃ ┃ ┣ 📂 error
+ ┃ ┃ ┣ 📂 validation
+ ┃ ┣ 📂 enum
+ ┃ ┣ 📂 repositories
+ ┃ ┃ ┣ 📂 interfaces
+ ┃ ┣ 📂 types
+ ┃ ┣ 📂 util
  ┃ ┣ 📂 routes
  ┃ ┣ 📂 config
  ┃ ┃ ┗ database.sqlite
- ┃ ┣ 📜 server.ts
+ ┃ 📜 server.ts
  ┣ 📜 package.json
  ┣ 📜 tsconfig.json
  ┗ 📜 README.md
